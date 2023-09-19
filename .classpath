@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="D:/eclipse/lib/log4j-2.17.1/log4j-api-2.17.1.jar"/>
 	<classpathentry kind="lib" path="D:/eclipse/lib/log4j-2.17.1/log4j-core-2.17.1.jar"/>
 	<classpathentry kind="lib" path="D:/eclipse/lib/jasypt-1.9.3.jar"/>
+	<classpathentry kind="lib" path="D:/eclipse/eclipse_2023_mediawill/lib/mariadb-java-client-3.0.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
