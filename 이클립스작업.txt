@@ -1,0 +1,41 @@
+
+################################################################
+이클립스에서 DBRecoder 구동을 위해 config 및 파일 경로 절대 경로로 수정
+################################################################
+
+1.	Config_File_Receiver.java
+
+	AS-IS
+		config = new FileInputStream("../config/DBRecorder.conf");
+		
+		dbconf = new FileInputStream("../config/database.conf");
+        
+		resconf = new FileInputStream("../config/Response.conf");
+			
+		
+	TO-BE
+	 	//config = new FileInputStream("../config/DBRecorder.conf");
+        config = new FileInputStream("./config/DBRecorder.conf");
+        
+        //dbconf = new FileInputStream("../config/database.conf");
+		dbconf = new FileInputStream("./config/database.conf");
+		
+		//resconf = new FileInputStream("../config/Response.conf");
+		resconf = new FileInputStream("./config/Response.conf");
+		
+2. DBRecorder.conf
+
+	AS-IS
+		Root_Dir=../Queue_0
+		
+	TO-BE
+		#Root_Dir=../Queue_0
+		Root_Dir=Queue_0
+		
+		
+		
+		
+수신확인 링크
+http://localhost:8080/resp.jsp?rsID=3670&mID=367&rName=test&rMail=hun1110@enders.co.kr&rID=QSKY1&refMID=0&subID=0
+
+3680``368``0``0``김영훈``QSKY1``hun1110@enders.co.kr``2021/10/12 21:22:29		
