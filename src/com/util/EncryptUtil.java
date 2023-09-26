@@ -43,6 +43,7 @@ public class EncryptUtil {
 				}
 				result = sb.toString();
 			} catch (NoSuchAlgorithmException nsae) {
+				LOGGER.error(nsae);
 				result = str;
 			}
 			return result;
@@ -64,6 +65,7 @@ public class EncryptUtil {
 			encryptor.setPassword(password);
 			return encryptor.encrypt(str);
 		} catch(Exception e) {
+			LOGGER.error(e);
 			//logger.error("getJasyptEncryptedString error = " + e);
 			return str;
 		}
@@ -86,7 +88,7 @@ public class EncryptUtil {
 			return encryptor.decrypt(str);
 		} catch(Exception e) {
 			LOGGER.error(e);
-			e.printStackTrace();
+			//e.printStackTrace();
 			//logger.error("getJasyptDecryptedString error = " + e);
 			return str;
 		}
@@ -109,6 +111,7 @@ public class EncryptUtil {
 			encryptor.setSaltGenerator(new StringFixedSaltGenerator(password));
 			return encryptor.encrypt(str);
 		} catch(Exception e) {
+			LOGGER.error(e);
 			//logger.error("getJasyptEncryptedUnFixString error = " + e);
 			return str;
 		}
@@ -131,7 +134,7 @@ public class EncryptUtil {
 			return encryptor.decrypt(str);
 		} catch(Exception e) {
 			LOGGER.error(e);
-			e.printStackTrace();
+			//e.printStackTrace();
 			//logger.error("getJasyptDecryptedUnFixString error = " + e);
 			return str;
 		}
@@ -147,6 +150,7 @@ public class EncryptUtil {
 			Encoder encoder = Base64.getEncoder();
 			return new String(encoder.encode(str.getBytes()));
 		} catch(Exception e) {
+			LOGGER.error(e);
 			//logger.error("getBase64EncodedString Error = " + e.getMessage());
 			return str;
 		}
@@ -162,6 +166,7 @@ public class EncryptUtil {
 			Decoder decoder = Base64.getDecoder();
 			return new String(decoder.decode(str.getBytes()));
 		} catch(Exception e) {
+			LOGGER.error(e);
 			//logger.error("getBase64DecodedString Error = " + e.getMessage());
 			return str;			
 		}

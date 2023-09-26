@@ -3,18 +3,23 @@ package com.util;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-//¿¡·¯ ·Î±× ÆÄÀÏÀÇ Æ÷¸ËÀ» »ý¼ºÇÏ´Â Å¬·¡½º
+//ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
 import java.util.Hashtable;
 
 import com.config.Config_File_Receiver;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
- * ¿¡·¯ ·Î±× °ü¸® Å¬·¡½º
+ * ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
  * @version 1.0
  * @author ymkim
  */
 public class utilLogWriter
 {
+	
+	private static final Logger LOGGER = LogManager.getLogger(utilLogWriter.class.getName());
+
 	
 	public utilLogWriter() {
 		// TODO Auto-generated constructor stub
@@ -24,28 +29,28 @@ public class utilLogWriter
 	}
 	
 	
-	  /**·Î±× ÆÄÀÏ È®ÀåÀÚ*/
+	  /**ï¿½Î±ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½*/
 	  public static String LOG_EXT = ".log";
-	  /**¹é¾÷ÆÄÀÏ¸í*/
+	  /**ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½*/
 	  public static String BACK_EXT = ".bak";
-	  /**¿¡·¯·Î±×°¡ ½×ÀÌ´Â Æú´õ*/
+	  /**ï¿½ï¿½ï¿½ï¿½ï¿½Î±×°ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½*/
 	  public static String ERROR_LOG_FOLDER = Config_File_Receiver.RESPONSE_LOG_PATH;
 	  //public static String ERROR_LOG_FOLDER = ".\\response\\";
 	  
 
 	  
 	/**
-	 * ·Î±× ÆÄÀÏÀ» ¸¸µé¾îÁØ´Ù.
+	 * ï¿½Î±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
 	 * @version 1.0
 	 * @author ymkim
-	 * @param errorClassName ¿¡·¯°¡ ¹ß»ýÇÑ Å¬·¡½º¸í
-	 * @param errorType ¿¡·¯Á¾·ù
-	 * @param comment ¿¡·¯¸Þ½ÃÁö
-	 * @param etcInfo ±âÅ¸¿¡·¯Á¤º¸
+	 * @param errorClassName ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * @param errorType ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * @param comment ï¿½ï¿½ï¿½ï¿½ï¿½Þ½ï¿½ï¿½ï¿½
+	 * @param etcInfo ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	public static void setLogFormat(String errorClassName, String errorType, String comment,String etcInfo)
 	{
-		String errorTime = LogDateWriter.getLogTime(); //¿¡·¯°¡ ¹ß»ýÇÑ ½ÃÁ¡
+		String errorTime = LogDateWriter.getLogTime(); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 		String demimiter = "``";
 		StringBuffer sb = new StringBuffer();
@@ -53,17 +58,17 @@ public class utilLogWriter
 				.append(demimiter).append(errorType).append(demimiter)
 				.append(comment).append(demimiter).append(etcInfo);
 
-		//»ý¼ºµÈ ¿¡·¯·Î±×¸¦ ³Ö¾îÁØ´Ù.
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î±×¸ï¿½ ï¿½Ö¾ï¿½ï¿½Ø´ï¿½.
 		setInfoInsert(sb.toString());
 		sb = null;
 	}
 	
 	/**
-	   * ¿¡·¯·Î±× Ã³¸®¸¦ ÆÄÀÏ¿¡ ÀúÀåÇÑ´Ù.
+	   * ï¿½ï¿½ï¿½ï¿½ï¿½Î±ï¿½ Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 	   * @version 1.0
 	   * @author ymkim
-	   * @param errorInfo ¿¡·¯ Á¤º¸ ³»¿ë
-	   * @return boolean true - ÆÄÀÏ »ý¼º ¼º°ø, false - ÆÄÀÏ »ý¼º ½ÇÆÐ
+	   * @param errorInfo ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	   * @return boolean true - ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, false - ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	   */
 	  public static boolean setInfoInsert(String errorInfo) {
 	    String errorLogName = LogDateWriter.getLogFolderName() + LOG_EXT;
@@ -80,7 +85,8 @@ public class utilLogWriter
 	      return_value = true;
 	    }
 	    catch (Exception e) {
-	      e.printStackTrace();
+	    	LOGGER.error(e);
+	      //e.printStackTrace();
 	      return_value = false;
 	    }
 	    finally {

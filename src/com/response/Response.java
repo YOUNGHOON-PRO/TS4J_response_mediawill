@@ -62,6 +62,8 @@ public class Response extends Thread
 //		neoQueue_DirManager.start();
 
 		start();
+		
+		new DemonCheck_Response("Response").start();
 	}
 
 	public void run()
@@ -249,7 +251,7 @@ public class Response extends Thread
 		}catch(Exception e)
 		{
 			LOGGER.error(e);
-			e.printStackTrace();
+			//e.printStackTrace();
 			//에러 로그에 남겨준다.
 //			ErrorLogGenerator.setErrorLogFormat("LogFileManager", ReserveStatusCode.SQL_ERROR_TYPE,ReserveStatusCode.RESPONSE_LOG_FAIL_COMMENT,mID);
 			return_value = false;
@@ -265,7 +267,7 @@ public class Response extends Thread
 			}catch(Exception e)
 			{
 				LOGGER.error(e);
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 		return return_value;
@@ -316,7 +318,7 @@ public class Response extends Thread
 			}catch(Exception e)
 			{
 				LOGGER.error(e);
-				e.printStackTrace();
+				//e.printStackTrace();
 				//에러 로그에 남겨준다.
 //				ErrorLogGenerator.setErrorLogFormat("LogFileManager", ReserveStatusCode.SQL_ERROR_TYPE,ReserveStatusCode.RESPONSE_LOG_FAIL_COMMENT,mID);
 				return_value = false;
@@ -332,7 +334,7 @@ public class Response extends Thread
 				}catch(Exception e)
 				{
 					LOGGER.error(e);
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			}
 			return return_value;

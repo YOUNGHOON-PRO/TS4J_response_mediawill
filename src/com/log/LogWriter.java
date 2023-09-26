@@ -61,8 +61,11 @@ public class LogWriter
 		try
 		{
 			sb = new StringBuffer();
-			System.out.println(sb.append(classFile).append(" - ").append(classMethod)
-							   .append(" : ").append(errorStr).toString());
+//			System.out.println(sb.append(classFile).append(" - ").append(classMethod)
+//							   .append(" : ").append(errorStr).toString());
+			
+			LOGGER.info(sb.append(classFile).append(" - ").append(classMethod)
+					   .append(" : ").append(errorStr).toString());
 
 			sb = new StringBuffer();
 			//logHistoryFile=new File("NeoQueueInfo"+File.separator+"error"+File.separator+getLogDate()+".err");

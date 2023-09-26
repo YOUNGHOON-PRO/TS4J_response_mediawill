@@ -88,8 +88,8 @@ public class Config_File_Receiver
 		try
 		{
 			//configuration for work.
-            //config = new FileInputStream("../config/DBRecorder.conf");
-            config = new FileInputStream("./config/DBrecorder.conf");
+            config = new FileInputStream("../config/DBRecorder.conf");
+            //config = new FileInputStream("./config/DBrecorder.conf");
 			props.load(config);
 
 			NeoSMTP_Agent=Integer.parseInt(props.getProperty("NeoSMTP_Agent"));
@@ -110,8 +110,8 @@ public class Config_File_Receiver
 			Log_Sep=props.getProperty("Log_Sep");
 
             //configuration for db connection.
-            //dbconf = new FileInputStream("../config/database.conf");
-            dbconf = new FileInputStream("./config/database.conf");
+            dbconf = new FileInputStream("../config/database.conf");
+            //dbconf = new FileInputStream("./config/database.conf");
             props.load(dbconf);
             
             PASSWARD_YN = props.getProperty("PASSWARD_YN");
@@ -121,8 +121,8 @@ public class Config_File_Receiver
 			USER=props.getProperty("USER");
 			PASSWD=props.getProperty("PASSWARD");
 			
-			//resconf = new FileInputStream("../config/Response.conf");
-			resconf = new FileInputStream("./config/Response.conf");
+			resconf = new FileInputStream("../config/Response.conf");
+			//resconf = new FileInputStream("./config/Response.conf");
 			props.load(resconf);
 			
 			RESPONSE_INSERT_PERIOD = Integer.parseInt(props.getProperty("RESPONSE_INSERT_PERIOD"));
@@ -138,6 +138,7 @@ public class Config_File_Receiver
 		}
 		catch(Exception e)
 		{
+			LOGGER.error(e);
 			logWriter.logWrite("CONFIG_FILE_RECEIVER ERROR","construct",e);
 		}finally{
                   try{
@@ -145,7 +146,7 @@ public class Config_File_Receiver
                       config.close();
                     if (dbconf != null)
                       dbconf.close();
-                  }catch(Exception e){}
+                  }catch(Exception e){LOGGER.error(e);}
                 }
 	}
 }
