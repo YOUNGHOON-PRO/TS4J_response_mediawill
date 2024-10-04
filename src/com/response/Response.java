@@ -30,7 +30,15 @@ public class Response extends Thread
 	//수신확인테이블 검색용쿼리
 	public String RES_SEARCH_QUERY = "SELECT RSID FROM TS_RESPONSELOG WHERE RSID=?";
 	//수신확인테이블 입력용쿼리
-	public static String RES_INSERT_QUERY = "INSERT INTO TS_RESPONSELOG VALUES(?,?,?,?,?,?,?,?)";
+	//public static String RES_INSERT_QUERY = "INSERT INTO TS_RESPONSELOG VALUES(?,?,?,?,?,?,?,?)";
+	public static String RES_INSERT_QUERY = " IF (SELECT COUNT(*) FROM TS_RESPONSELOG WHERE RSID=?) > 0 THEN" + 
+											"    UPDATE  TS_RESPONSELOG" + 
+											"    SET     RSDATE = to_char(NOW(), 'YYYY/MM/DD HH24:MI:SS') " + 
+											"    WHERE   RSID=1 ;  " + 
+											" ELSE " + 
+											"    INSERT INTO TS_RESPONSELOG (RSID, MID, SUBID, REFMID, RSDATE, RID, RNAME, RMAIL) VALUES(?, ?, ?, ?, ?, ?, ?, ?);    " + 
+											" END IF " ;
+
 	//수신확인통계테이블 검색용쿼리
 	public static String RES_STATIC_SEARCH_QUERY = "SELECT COUNT(*) FROM TS_RESPONSELOG WHERE MID=?";
 	//수신확인통계테이블 수정용쿼리
@@ -121,7 +129,7 @@ public class Response extends Thread
 		String rID = "";
 		String rMail = "";
 		String rsDate = "";
-		ArrayList mIDList = new ArrayList();
+		ArrayList<String> mIDList = new ArrayList();
 		
 		Connection con_work = DBConnection.getConnection();
 		ResultSet rs =null;
@@ -207,13 +215,14 @@ public class Response extends Thread
 								
 									insert_pstmt.clearParameters();
 									insert_pstmt.setString(1, rsID);
-									insert_pstmt.setString(2, mID);
-									insert_pstmt.setString(3, subID);
-									insert_pstmt.setString(4, refMID );
-									insert_pstmt.setString(5, rsDate);
-									insert_pstmt.setString(6, rID);
-									insert_pstmt.setString(7, rName);
-									insert_pstmt.setString(8, rMail);
+									insert_pstmt.setString(2, rsID);
+									insert_pstmt.setString(3, mID);
+									insert_pstmt.setString(4, subID);
+									insert_pstmt.setString(5, refMID );
+									insert_pstmt.setString(6, rsDate);
+									insert_pstmt.setString(7, rID);
+									insert_pstmt.setString(8, rName);
+									insert_pstmt.setString(9, rMail);
 									insert_pstmt.executeUpdate();
 									
 									//updateResStaticCount(mIDList);
@@ -223,20 +232,30 @@ public class Response extends Thread
 									//수신확인 이력 관리 (respose 폴더에 2021_09_27.log 파일 생성)
 									utilLogWriter.setLogFormat("Response", "수신확인 완료", "rsID:"+rsID, "mId:"+mID);
 								}
-								
-								Response rsp = new Response();
-								rsp.updateResStaticCount(mIDList);
-			
 			
 							}
 							
 							//수신통계를 위한 테이블(Response_rsInfo)에도 값을 넣어준다.
-			
-							
 							
 							}
 							
 					}
+				
+				ArrayList<String> newLi = new ArrayList<String>();
+
+			    // 새로운 ArrayList에 요소를 추가
+			    for(String strValue : mIDList) {
+			      // 중복 요소가 없는 경우 요소를 추가
+			      if(!newLi.contains(strValue)) {
+			        newLi.add(strValue);
+			      }
+			    }
+			    
+				if(newLi.size()>0) {
+					updateResStaticCount(mIDList, con_work);	
+				}
+				
+				
 				if(br!=null) br.close();
 				//수신로그를 지워준다.
 				if(reRcLog.exists()) {
@@ -275,9 +294,9 @@ public class Response extends Thread
 
 	
 	//수신통계를 위한 테이블(Response_rsInfo)에도 값을 넣어준다.
-		public boolean updateResStaticCount(ArrayList mIDList)
+		public boolean updateResStaticCount(ArrayList mIDList, Connection con_work)
 		{
-			Connection con_work = DBConnection.getConnection();
+			//Connection con_work = DBConnection.getConnection();
 			ResultSet rs =null;
 			PreparedStatement pstmt = null;
 			PreparedStatement search_pstmt = null;
